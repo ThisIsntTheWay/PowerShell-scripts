@@ -1,4 +1,8 @@
-# Function definition
+# Author: Valentin Klopfenstein
+# Made in August 2019
+# Use it at will
+
+# Define main menu
 
 function Main-Menu {
     param (
