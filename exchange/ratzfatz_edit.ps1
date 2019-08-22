@@ -41,6 +41,7 @@ function exportMail {
     ''
     '[i] Caution! Only possible in on-premises configuration!'
     ''
+
     $target = Read-Host "Target Mailbox"
     $path = Read-Host "Path (Must be UNC)"
 
@@ -66,14 +67,14 @@ cls
         {
         '1' {
 
-        assignPerm
+            assignPerm
 
         } '2' {
 
-        exportMail
+            exportMail
 
         } '3' {
-          'You chose option #3'
+          'NOT YET COMPLETE'
         }
         }
         pause
