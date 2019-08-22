@@ -65,17 +65,17 @@ cls
         $selection = Read-Host "Awaiting input"
         switch ($selection)
         {
-        '1' {
+            '1' {
 
-            assignPerm
+                assignPerm
 
-        } '2' {
+            } '2' {
 
-            exportMail
+                exportMail
 
-        } '3' {
-          'NOT YET COMPLETE'
-        }
+            } '3' {
+              'NOT YET COMPLETE'
+            }
         }
         pause
      }
