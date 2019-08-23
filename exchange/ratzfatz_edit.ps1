@@ -103,23 +103,18 @@ cls
         switch ($selection)
         {
             '1' {
-
                 assignPerm
-
             } '2' {
-
                 exportMail
-
             } '3' {
-              'NOT YET COMPLETE'
+				'NOT YET COMPLETE'
 
             } default {
-
                 'Invalid input!'
-
             } 'Q' {
-            Write-Host 'Good day!'
-            exit }
+				Write-Host 'Good day!'
+				exit 
+			}
         }
         
         Write-Host 'Press RETURN to proceed.'
