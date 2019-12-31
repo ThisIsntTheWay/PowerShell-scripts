@@ -204,7 +204,7 @@ Import-PSSession $Session -DisableNameChecking
 # Error handling
 if($?) {
    Write-Host "Ready!" -ForegroundColor Green
-   $host.ui.RawUI.WindowTitle = "Active O365 session: $choiceName"
+   $host.ui.RawUI.WindowTitle = "Active EO session: $choiceName"
    
 } else {
    Write-Host "An error has occurred." -ForegroundColor Red
