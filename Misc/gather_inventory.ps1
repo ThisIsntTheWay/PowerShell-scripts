@@ -5,10 +5,8 @@
 
 Import-Module ActiveDirectory
 if (test-path -Path "<path>$name-sw_info.csv") {
-
 	Write-Host "$name has already been processed. Skipping."
 } else {
-
 	# Acquire architecture, install date, build version, operating system, hostname
 	$arch = (Get-WmiObject Win32_OperatingSystem).OSArchitecture
 	$date = gcim Win32_OperatingSystem | select InstallDate #using GCIM for date formatting
