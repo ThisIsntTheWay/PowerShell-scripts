@@ -15,8 +15,11 @@ param (
 	[String]$Connection = "NULL"
 )
 
+$scrBuild 	= "1.3"
+$scrBuildDate 	= "03.01.2020"
+
 Write-Host "Version: $scrBuild | Build date: $scrBuildDate" -ForegroundColor Gray
-Write-Host "© 2020, V. Klopfenstein - sdag" -ForegroundColor Gray
+Write-Host "© 2020, V. Klopfenstein" -ForegroundColor Gray
 
 # Check if parameter, once supplied, is valid
 if ($Connection -ne "NULL") {
@@ -25,14 +28,11 @@ if ($Connection -ne "NULL") {
 		
 		Write-Host "Cannot continue:" -ForegroundColor Red -BackgroundColor Black
 		Write-Host "Parameter '$Connection' is invalid." -ForegroundColor Red -BackgroundColor Black
-		Write-Host "-Connection must be a number." -ForegroundColor Red -BackgroundColor Black
+		Write-Host "'-Connection' must be a number." -ForegroundColor Red -BackgroundColor Black
 		
 		exit
 	}
 }
-
-$scrBuild 		= "1.2"
-$scrBuildDate 	= "31.12.2019"
 
 # Check if a session at outlook.office365.com exists already
 $chk = Get-PSSession | Where-Object {$_.ComputerName -eq "outlook.office365.com"}
