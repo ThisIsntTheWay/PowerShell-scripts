@@ -274,7 +274,7 @@ until ($break -eq 'y')
 Write-Host ""
 Write-Host "Importing session as $choiceName..." -ForegroundColor Cyan
 
-# Import PSSession based on previous input
+# Import PSSession
 $Session = New-PSSession -ConfigurationName Microsoft.Exchange -ConnectionUri https://outlook.office365.com/powershell-liveid/ -Credential $objCred -Authentication Basic -AllowRedirection
 Import-PSSession $Session -DisableNameChecking
 
