@@ -6,19 +6,44 @@
 # (c) 2019, vk
 # -------------------------------------------------------------------------
 
+# ---------------------------------------------------------------------------------------------------
+# === INIT
+
+# Parameter for -Connection
+# Intent is to provide user with a quick access to connection profiles
+param (
+	[String]$Connection = "NULL"
+)
+
+Write-Host "Version: $scrBuild | Build date: $scrBuildDate" -ForegroundColor Gray
+Write-Host "© 2020, V. Klopfenstein - sdag" -ForegroundColor Gray
+
+# Check if parameter is a number	
+if ( !($Connection -match '[1-9]') ) {
+	Write-Host ""
+	
+	Write-Host "Cannot continue:" -ForegroundColor Red -BackgroundColor Black
+	Write-Host "Parameter '$Connection' is invalid." -ForegroundColor Red -BackgroundColor Black
+	Write-Host "-Connection must be a number." -ForegroundColor Red -BackgroundColor Black
+	
+	exit
+}
+
 $scrBuild 		= "1.2"
 $scrBuildDate 	= "31.12.2019"
 
-# Check if a session exists already
-
+# Check if a session at outlook.office365.com exists already
 $chk = Get-PSSession | Where-Object {$_.ComputerName -eq "outlook.office365.com"}
 
+# Prompt user for choice if a session has been detected.
+# Continuity of script is determined based on the value of $i.
+# 'y' = terminate, 'n' = continue 
 if ($chk.ComputerName -eq "outlook.office365.com") {
 
 	$i = "y"
 	
-	Write-Host "Cannot continue!" -ForegroundColor Red
-	Write-Host "A session already exists." -ForegroundColor Red
+	Write-Host "Cannot continue:" -ForegroundColor Red -BackgroundColor Black
+	Write-Host "At least one active PSSession already exists." -ForegroundColor Red -BackgroundColor Black
 	
 	Write-Host ""
 	
@@ -30,8 +55,7 @@ if ($chk.ComputerName -eq "outlook.office365.com") {
 		$t = Get-PsSession | Where ComputerName -eq "outlook.office365.com"
 		$d = $t
 		
-		# Remove PSSession
-		# The following commands achieve the same thing, but are present for redundancy
+		# Disconnect/Remove PSSession
 		Remove-PSSession $chk | Out-Null
 	   
 		if($?) {
@@ -45,9 +69,8 @@ if ($chk.ComputerName -eq "outlook.office365.com") {
 			$i = "n"
 		   
 		} else {
-			Write-Host "An error has occurred!" -ForegroundColor Red
-			Write-Host "Try creating a new runspace." -ForegroundColor Red
-		   
+			Write-Host "An error has occurred!" -ForegroundColor Red -BackgroundColor Black
+			Write-Host "Try creating a new runspace." -ForegroundColor Red -BackgroundColor Black
 			$i = "y"
 		}		
 	}	
@@ -59,9 +82,9 @@ function Write-MainMenu {
 	Write-Host ""
 	Write-Host "======================================"
 	Write-Host "| Please select a credential object: |"
-	Write-Host "| 1: USER 1                          |"
-	Write-Host "| 2: USER 2                          |"
-	Write-Host "| 3: USER 3                          |"
+	Write-Host "| 1: OMITTED                         |"
+	Write-Host "| 2: OMITTED                         |"
+	Write-Host "| 3: OMITTED                         |"
 	Write-Host "|                                    |"
 	Write-Host "| 9: Manually specified              |"
 	Write-Host "| ---------------------------------- |"
@@ -72,16 +95,31 @@ function Write-MainMenu {
 }
 
 # ---------------------------------------------------------------------------------------------------
+# === MAIN
 
-Write-Host "Version: $scrBuild | Build date: $scrBuildDate" -ForegroundColor Gray
-Write-Host "© 2020, V. Klopfenstein - sdag" -ForegroundColor Gray
-Write-MainMenu
-Write-Host "Use 'c' to prompt for command, 'r' for printing this menu again." -ForegroundColor Gray
+# Implement check to see if user has provided a paramter.
+# If yes, skip Menu segment.
+
+if ($Connection -ne "NULL") {
+	Write-Host "A paremeter has been defined."
+	
+} else {
+	Write-MainMenu
+	Write-Host "Use 'c' to prompt for command, 'r' for printing this menu again." -ForegroundColor Gray
+}
 
 # Menu logic
 do {
 	$break = "n"
-	$choice = Read-Host "Input"
+	
+	# If a parameter has been defined, skip Read-Host
+	if ($Connection -ne "NULL") {
+		# Copy $connection into $choice, simulating user input
+		$choice = $Connection
+		
+	} else {
+		$choice = Read-Host "Input"
+	}
 	
 	switch ($choice) {
 		
@@ -91,34 +129,34 @@ do {
 			# USER 1
 			$break = "y"
 			
-			$choiceName = "<OMITTED>"
+			$choiceName = "USER 1"
 			
-			$domPWenc = "<OMITTED>"
+			$domPWenc = ""
 			$domPWstr = ConvertTo-SecureString -String $domPWenc
 			
-			$objCred = New-Object System.Management.Automation.PSCredential ("<OMITTED>", $domPWstr)
+			$objCred = New-Object System.Management.Automation.PSCredential (".onmicrosoft.com", $domPWstr)
 		}
 		'2' {
 			# USER 2
 			$break = "y"
 			
-			$choiceName = "<OMITTED>"
+			$choiceName = "USER 2"
 			
-			$domPWenc = "<OMITTED>"
+			$domPWenc = ""
 			$domPWstr = ConvertTo-SecureString -String $domPWenc
 			
-			$objCred = New-Object System.Management.Automation.PSCredential ("<OMITTED>", $domPWstr)		
+			$objCred = New-Object System.Management.Automation.PSCredential (".onmicrosoft.com", $domPWstr)		
 		}
 		'3' {
 			# USER 3
 			$break = "y"
 			
-			$choiceName = "<OMITTED>"
+			$choiceName = "USER 3"
 			
-			$domPWenc = "<OMITTED>"
+			$domPWenc = ""
 			$domPWstr = ConvertTo-SecureString -String $domPWenc
 			
-			$objCred = New-Object System.Management.Automation.PSCredential ("<OMITTED>", $domPWstr)		
+			$objCred = New-Object System.Management.Automation.PSCredential (".onmicrosoft.com", $domPWstr)		
 		}
 		'9' {
 			# Other / User specified
@@ -149,12 +187,12 @@ do {
 			
 			Write-Host ""
 			Write-Host "Convert input to SecureString and encrypt." -ForegroundColor Cyan
-			$Secure = Read-Host "String (obfuscated)" -AsSecureString
-			$Encrypted = ConvertFrom-SecureString -SecureString $Secure
+			$sString = Read-Host "String (obfuscated)" -AsSecureString
+			$eString = ConvertFrom-SecureString -SecureString $sString
 
 			Write-Host ""
 			Write-Host "Encrypted string:" -Foregroundcolor Cyan
-			Write-Host "$Encrypted" -Foregroundcolor Yellow
+			Write-Host "$eString" -Foregroundcolor Yellow
 			Write-Host ""
 		}
 		'r' {
@@ -181,8 +219,15 @@ do {
 	# Handling of unrecognized input
 	if ($break -ne 'y') {		
 		if ($noErr -ne "y") {
-			Write-Host "Invalid input." -ForegroundColor Red
+			
+			Write-Host "Invalid input." -ForegroundColor Red -BackgroundColor Black
 			Write-Host ""
+			
+			# Check if a parameter was provided.
+			# If yes, exit to prevent a loop.
+			if ($connection -ne "NULL") {				
+				exit
+			}
 		}
 		
 		$noErr = "n"
@@ -191,8 +236,7 @@ do {
 until ($break -eq 'y')
 
 # ---------------------------------------------------------------------------------------------------
-
-# Execution
+# === EXEC
 
 Write-Host ""
 Write-Host "Importing session as $choiceName..." -ForegroundColor Cyan
@@ -204,12 +248,10 @@ Import-PSSession $Session -DisableNameChecking
 # Error handling
 if($?) {
    Write-Host "Ready!" -ForegroundColor Green
-   $host.ui.RawUI.WindowTitle = "Active EO session: $choiceName"
-   
+   $host.ui.RawUI.WindowTitle = "Active O365 session: $choiceName"
 } else {
-   Write-Host "An error has occurred." -ForegroundColor Red
-   Write-Host "Please consult last exception." -ForegroundColor Red
+   Write-Host "An error has occurred!" -ForegroundColor Red -BackgroundColor Black
+   Write-Host "Script cannot continue." -ForegroundColor Red -BackgroundColor Black
    Write-Host ""
-   Write-Host "Last input: $choice ($choiceName)" -ForegroundColor Yellow
-   
+   Write-Host "Last choice: $choice ($choiceName)" -ForegroundColor Yellow
 }
