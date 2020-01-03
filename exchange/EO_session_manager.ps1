@@ -7,24 +7,24 @@
 # 	(c) 2019, vk
 #
 # @USAGE
-# 	This script can be run either as standalone or with parameters:
-# 	-Connect <INT>
-# 	-Disconnect
+# 	This script can be run either as is or with the following, optional parameters:
+# 	  -Connect <INT>
+# 	  -Disconnect
 #
-# 	When using -Connect, a value with data type INT is expected to be passed along.
+# 	When using '-Connect', a number is expected to be passed along.
 # 	The value will reference a connection profile as shown in Write-MainMenu.
-# 	Example:
-# 	Script.ps1 -Connect 1 will load connection profile USER 1, as it is located at index '1'
 #
-# 	When using -Disconnect, no value is expected to be passed along.
-# 	If present, this script will terminate all PSSessions at outlook.office365.com
+# 	Example:
+# 	".\Script.ps1 -Connect 1" will load connection profile USER 1, as it is located at index '1'.
+#
+# 	When using '-Disconnect', no value is expected to be passed along.
+# 	If used, the script will terminate all PSSessions at outlook.office365.com
 # ---------------------------------------------------------------------------------------------------
 
 # ---------------------------------------------------------------------------------------------------
 # INIT Phase
 
-# Parameter for -Connection
-# Intent is to provide user with a quick access to connection profiles
+# Parameters
 param (
 	[String]$Connection = "NULL",
 	[Switch]$Disconnect
@@ -132,8 +132,8 @@ function Write-MainMenu {
 # ---------------------------------------------------------------------------------------------------
 # === MAIN
 
-# Implement check to see if user has provided a paramter.
-# If yes, skip Menu segment.
+# Implement check to see if user has provided the $Connection param.
+# If yes, skip menu segment.
 
 if ($Connection -ne "NULL") {
 	# Do nothing (yet?)
@@ -142,7 +142,7 @@ if ($Connection -ne "NULL") {
 	Write-Host "Use 'c' to prompt for command, 'r' for printing this menu again." -ForegroundColor Gray
 }
 
-# Menu logic
+# Menu/Param logic
 do {
 	$break = "n"
 	
@@ -263,7 +263,6 @@ do {
 				exit
 			}
 		}
-		
 		$noErr = "n"
 	}
 }
