@@ -1,0 +1,2 @@
+firstname;middleInitial;lastname;username;password;ou
+John;;Doe;JohnDoe;PASS;OU=Users,OU=My OU,DC=example,DC=local
