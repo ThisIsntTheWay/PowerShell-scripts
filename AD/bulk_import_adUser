@@ -1,0 +1,29 @@
+import-module activedirectory
+
+$import = import-csv "C:\PATH\TO\FILE.csv" -Delimiter ";"
+
+foreach ($usr in $import) {
+	$Username = $usr.username
+	$Password = $usr.password
+	$Firstname = $usr.firstname
+	$Lastname = $usr.lastname
+	$OU = $usr.ou
+
+	if (Get-ADUser -F {SamAccountName -eq $Username})
+	{
+		 Write-Host "User $Username already exists, skipping..." -ForegroundColor Red
+	}
+	else
+	{
+		New-ADUser `
+            -SamAccountName $Username `
+            -UserPrincipalName "$Username@EgliAG.local" `
+            -Name "$Firstname $Lastname" `
+            -GivenName $Firstname `
+            -Surname $Lastname `
+            -Enabled $True `
+            -DisplayName "$Lastname, $Firstname" `
+            -Path $OU `
+            -AccountPassword (convertto-securestring $Password -AsPlainText -Force) -ChangePasswordAtLogon $False
+	}
+}
