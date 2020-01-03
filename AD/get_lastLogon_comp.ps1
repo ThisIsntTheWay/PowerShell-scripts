@@ -1,4 +1,5 @@
 # (c) 2020, v. klopfenstein
+#
 # Get last logon date of specified computer objects.
 # Export result into specified CSV.
 
