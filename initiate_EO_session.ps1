@@ -19,7 +19,7 @@ Write-Host "Version: $scrBuild | Build date: $scrBuildDate" -ForegroundColor Gra
 Write-Host "© 2020, V. Klopfenstein - sdag" -ForegroundColor Gray
 
 # Check if parameter, once supplied, is valid
-if ($Connection -ne "NULL" {
+if ($Connection -ne "NULL") {
 	if ( !($Connection -match '[1-9]') ) {
 		Write-Host ""
 		
