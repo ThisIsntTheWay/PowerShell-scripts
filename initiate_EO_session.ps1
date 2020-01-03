@@ -12,14 +12,36 @@
 # Parameter for -Connection
 # Intent is to provide user with a quick access to connection profiles
 param (
-	[String]$Connection = "NULL"
+	[String]$Connection = "NULL",
+	[Switch]$Disconnect
 )
 
-$scrBuild 	= "1.3"
+$scrBuild 	= "1.4"
 $scrBuildDate 	= "03.01.2020"
 
 Write-Host "Version: $scrBuild | Build date: $scrBuildDate" -ForegroundColor Gray
 Write-Host "© 2020, V. Klopfenstein" -ForegroundColor Gray
+
+# Check if a session at outlook.office365.com exists already
+$chk = Get-PSSession | Where-Object {$_.ComputerName -eq "outlook.office365.com"}
+
+# Disconnect session if parameter '-Disconnect' is passed
+if ($Disconnect -eq $true) {
+	Write-Host "All active sessions at outlook.office365.com will be disconnected."
+	Remove-PSSession $chk
+	
+	if($?) {
+		Write-Host ""
+		Write-Host "Session(s) disconnected!" -ForegroundColor Green
+		$host.ui.RawUI.WindowTitle = "Windows PowerShell"
+	   
+	} else {
+		Write-Host "An error has occurred." -ForegroundColor Red -BackgroundColor Black
+		   
+		exit
+	}	
+	exit
+}
 
 # Check if parameter, once supplied, is valid
 if ($Connection -ne "NULL") {
@@ -33,9 +55,6 @@ if ($Connection -ne "NULL") {
 		exit
 	}
 }
-
-# Check if a session at outlook.office365.com exists already
-$chk = Get-PSSession | Where-Object {$_.ComputerName -eq "outlook.office365.com"}
 
 # Prompt user for choice if a session has been detected.
 # Continuity of script is determined based on the value of $i.
