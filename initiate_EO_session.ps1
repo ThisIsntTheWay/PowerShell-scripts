@@ -18,15 +18,17 @@ param (
 Write-Host "Version: $scrBuild | Build date: $scrBuildDate" -ForegroundColor Gray
 Write-Host "© 2020, V. Klopfenstein - sdag" -ForegroundColor Gray
 
-# Check if parameter is a number	
-if ( !($Connection -match '[1-9]') ) {
-	Write-Host ""
-	
-	Write-Host "Cannot continue:" -ForegroundColor Red -BackgroundColor Black
-	Write-Host "Parameter '$Connection' is invalid." -ForegroundColor Red -BackgroundColor Black
-	Write-Host "-Connection must be a number." -ForegroundColor Red -BackgroundColor Black
-	
-	exit
+# Check if parameter, once supplied, is valid
+if ($Connection -ne "NULL" {
+	if ( !($Connection -match '[1-9]') ) {
+		Write-Host ""
+		
+		Write-Host "Cannot continue:" -ForegroundColor Red -BackgroundColor Black
+		Write-Host "Parameter '$Connection' is invalid." -ForegroundColor Red -BackgroundColor Black
+		Write-Host "-Connection must be a number." -ForegroundColor Red -BackgroundColor Black
+		
+		exit
+	}
 }
 
 $scrBuild 		= "1.2"
