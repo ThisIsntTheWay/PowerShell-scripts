@@ -136,8 +136,7 @@ function Write-MainMenu {
 # If yes, skip Menu segment.
 
 if ($Connection -ne "NULL") {
-	Write-Host "A paremeter has been defined."
-	
+	# Do nothing (yet?)
 } else {
 	Write-MainMenu
 	Write-Host "Use 'c' to prompt for command, 'r' for printing this menu again." -ForegroundColor Gray
