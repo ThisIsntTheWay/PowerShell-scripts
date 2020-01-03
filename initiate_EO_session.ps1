@@ -1,13 +1,27 @@
-# -------------------------------------------------------------------------
-# Simple script to quickly initiate an Exchange Online session in PS.
-# Built to quickly access creds of commonly used tenants.
-# Also has some additional, gimmicky stuff.
+# ---------------------------------------------------------------------------------------------------
+# @AUTHOR
+#	Simple script to quickly initiate an Exchange Online session in PS.
+# 	Built to quickly access creds of commonly used tenants.
+# 	Also has some additional, gimmicky stuff.
 #
-# (c) 2019, vk
-# -------------------------------------------------------------------------
+# 	(c) 2019, vk
+#
+# @USAGE
+# 	This script can be run either as standalone or with parameters:
+# 	-Connect <INT>
+# 	-Disconnect
+#
+# 	When using -Connect, a value with data type INT is expected to be passed along.
+# 	The value will reference a connection profile as shown in Write-MainMenu.
+# 	Example:
+# 	Script.ps1 -Connect 1 will load connection profile USER 1, as it is located at index '1'
+#
+# 	When using -Disconnect, no value is expected to be passed along.
+# 	If present, this script will terminate all PSSessions at outlook.office365.com
+# ---------------------------------------------------------------------------------------------------
 
 # ---------------------------------------------------------------------------------------------------
-# === INIT
+# INIT Phase
 
 # Parameter for -Connection
 # Intent is to provide user with a quick access to connection profiles
