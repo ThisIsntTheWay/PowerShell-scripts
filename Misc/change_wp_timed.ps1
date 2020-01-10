@@ -14,7 +14,7 @@
 
 [bool]$wpFileValid = $false
 
-$curTimeH = (get-date).ToString('hh') -as [int]
+$curTimeH = (get-date).ToString('HH') -as [int]
 
 function Set-Wallpaper([string] $file) {
 
