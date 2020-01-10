@@ -13,6 +13,8 @@
 [string]$wpFileSuffix = ".jpg"
 [string]$wpFile = "NULL"
 
+[string]$time = "NULL"
+
 [bool]$wpFileValid = $false
 
 $curTimeH = (get-date).ToString('HH') -as [int]
@@ -43,7 +45,7 @@ function Set-Wallpaper([string] $file) {
 # ******************************
 # Main routine
 
-# Time Checks
+# Time checks
 if ($curTimeH -ge 21) {
 	$time = "Night"
 	
@@ -86,6 +88,10 @@ if ($curTimeH -ge 21) {
 	$wpFile = "sunrise" + $wpFileSuffix
 	Set-Wallpaper($wpFile)
 	
+}
+
+if ($time = "NULL") {
+	throw "Current time $curTimeH did not match any case!"
 }
 
 Write-Host "Current hour (24h): $curTimeH / $time"
