@@ -1,6 +1,6 @@
-# (c) 2020, v. klopfenstein
+$import = import-csv "C:\tmp\Users.csv" -Delimiter ";"
 
-$import = import-csv "C:\PATH\TO\FILE.csv" -Delimiter ";"
+$domain = "CHANGEME"
 
 foreach ($usr in $import) {
 	$Alias = $usr.username
@@ -13,5 +13,7 @@ foreach ($usr in $import) {
 	# Construct Mail adress
 	$mail = "$finitial$lname"
 	
-	Set-Mailbox -identity $Alias -EmailAddresses "SMTP:$mail@example.com" -EmailAddressPolicyEnabled $false
+	Set-Mailbox -identity $Alias -EmailAddresses "SMTP:$mail@$domain" -EmailAddressPolicyEnabled $false
+    
+    write-Host "Mail set for $fname $lname -> $mail@$domain"
 }
