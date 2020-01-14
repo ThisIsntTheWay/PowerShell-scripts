@@ -10,7 +10,7 @@ foreach ($usr in $import) {
 	# Get first character of fname
 	$finitial = $fname.SubString(0,1)
 	
-	# Construct Mail adress
+	# Construct Mail address
 	$mail = "$finitial$lname"
 	
 	Set-Mailbox -identity $Alias -EmailAddresses "SMTP:$mail@$domain" -EmailAddressPolicyEnabled $false
