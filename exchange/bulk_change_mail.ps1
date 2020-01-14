@@ -14,6 +14,6 @@ foreach ($usr in $import) {
 	$mail = "$finitial$lname"
 	
 	Set-Mailbox -identity $Alias -EmailAddresses "SMTP:$mail@$domain" -EmailAddressPolicyEnabled $false
-    
-    write-Host "Mail set for $fname $lname -> $mail@$domain"
+	
+	write-Host "Mail set for $fname $lname -> $mail@$domain"
 }
