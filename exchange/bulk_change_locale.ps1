@@ -33,4 +33,4 @@ switch($c) {
 }
 
 Write-Host ""
-Wriet-Host "Script has concluded." -ForegroundColor Magenta
+Write-Host "Script has concluded." -ForegroundColor Magenta
