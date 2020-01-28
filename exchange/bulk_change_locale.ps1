@@ -10,7 +10,7 @@
 
 Write-Host "Please specify a locale ID." -ForegroundColor Yellow
 Write-Host "(Commonly used: 2055 [de_CH], 1033 [en_US], 4108 [fr_CH])" -ForegroundColor DarkGray
-$l = Read-Host "Locale ID: $l"
+$l = Read-Host "Locale ID:"
 
 Write-Host ""
 Write-Host "Selected locale ID is: $l"
